@@ -1,7 +1,6 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get(`id`)
-const nombre =urlParams.get(`name`)
 const card = document.querySelector(".countriesInfo")
 
 const dataCountry = async () => {
