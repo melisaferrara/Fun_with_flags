@@ -1,13 +1,13 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get(`id`)
-const card = document.querySelector(".countries")
+const nombre =urlParams.get(`name`)
+const card = document.querySelector(".countriesInfo")
 
 const dataCountry = async () => {
     const data = await fetch(`https://restcountries.com/v3.1/name/${id}`);
     const response = await data.json();
  
-
     const countriesInfo = response.map(ele => {
 
         return { img: ele.flags, name: ele.name, population: ele.population, region: ele.region, capital: ele.capital, native: ele.name.official,
@@ -23,21 +23,24 @@ const dataCountry = async () => {
          const languages = currencies[0].languages
          const languagesValue = Object.values(languages)
 
-        card.innerHTML += ` <div class="country">
+         const borderCountries = ele.border && ele.border.length > 0 ? ele.border.join(', ') : 'No bordering countries';
+
+        card.innerHTML += ` <div class="countryInfo">
                            <img src=${ele.img.png}>
-                           <p>${ele.name.common}</p>
+                           <div class="info">
+                           <h3>${ele.name.common}</h3>
                            <p>Native name: ${ele.native}
                            <p>Population: ${ele.population}</p>
                            <p>Region: ${ele.region}</p>
-                           <p>Subregio: ${ele.subregion}</p>
-                           <p>Capital: ${ele.capital}</p>
+                           <p>Subregion: ${ele.subregion}</p>
+                           <p>Capital: ${ele.capital}</p></div>
+                           <div class="info2">
                            <p>Currencies: ${value[0].name}</p>
                            <p>Language(s): ${languagesValue[0]}</p>
-                             <p>Border Countries: ${ele.border}</p>
+                             <p>Border Countries: ${borderCountries}</p>
                            <a href="./index.html">
-                           <button id="button">Back</button></div></a>`
-                           
-                        
+                           <button id="button">Back</button></a></div></div>`
+      
                           
     });
 }
